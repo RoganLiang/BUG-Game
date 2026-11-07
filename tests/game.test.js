@@ -1,0 +1,6 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {fresh,draw,choose,restore,origins,chapters} from '../web/game.js';
+test('four equally sized draw intervals and no repeated origin bonus',()=>{for(let i=0;i<4;i++){const s=draw(fresh(),()=>i/4);assert.equal(s.origin,i);assert.equal(s.stats[Object.keys(origins[i].bonus)[0]],fresh().stats[Object.keys(origins[i].bonus)[0]]+8);assert.deepEqual(draw(s),s);}});
+test('all eight story paths complete, update designated cities, and restore exactly',()=>{for(let path=0;path<8;path++){let s=draw(fresh(),()=>0);for(let i=0;i<3;i++){const option=(path>>i)&1;const old=structuredClone(s);s=choose(s,option);assert.equal(old.step,i);assert.equal(s.step,i+1);const o=chapters[i].options[option];assert.equal(s.events.find(e=>e.id===o.event).risk,old.events.find(e=>e.id===o.event).risk+o.impact);for(const [k,v]of Object.entries(o.delta))assert.equal(s.stats[k],old.stats[k]+v);}assert.deepEqual(restore(JSON.stringify(s)),s);assert.deepEqual(choose(s,0),s);}});
+test('invalid actions and corrupted saves remain safe',()=>{assert.deepEqual(choose(fresh(),0),fresh());for(const value of ['bad','null','{}','{"version":1,"origin":7,"step":0}','{"version":1,"origin":0,"step":3,"history":[]}'])assert.deepEqual(restore(value),fresh());const s=draw(fresh(),()=>0);assert.deepEqual(choose(s,12),s);});
