@@ -2,6 +2,8 @@
 
 **0.2.0 · 原創單人敘事試玩 · 繁體中文（臺灣）**
 
+▶ [立即免費試玩](https://roganliang.github.io/BUG-Game/)
+
 一段17秒影片，一位韓國朋友，一扇巴黎的窗。查證、聯絡、觀察、忽略或傳播，改變你取得的情報與訊息擴散。所有人物與危機皆虛構，城市訊號不等於真實新聞。
 
 ## 本機試玩
@@ -54,7 +56,7 @@ npm run test:browser
 
 ## GitHub／發布狀態
 
-2026-11-10使用者已授權公開`RoganLiang/BUG-Game`、推送、免費CI及GitHub Pages公開試玩。推送不自動發布，只有手動deploy工作流程會發布通過CI的提交。原始碼已推送至[RoganLiang/BUG-Game](https://github.com/RoganLiang/BUG-Game)，PR #1與CI已完成；Pages尚待首次啟用。實際提交SHA、HTTPS網址、部署成功及外部驗證狀態，以[交付證據](docs/DELIVERY.md)為準；授權不代表已上線。
+2026-11-10使用者已授權公開`RoganLiang/BUG-Game`、推送、免費CI及GitHub Pages公開試玩。推送不自動發布，只有手動deploy工作流程會發布通過CI的提交。原始碼已推送至[RoganLiang/BUG-Game](https://github.com/RoganLiang/BUG-Game)，PR #1／#2與CI已完成；GitHub Pages已於2026-11-11 04:26（臺北時間）成功發布，公開HTTPS與行動Chromium流程驗證通過。實際提交SHA、HTTPS網址、部署成功及外部驗證狀態，以[交付證據](docs/DELIVERY.md)為準；授權不代表已上線。
 
 尚未宣告軟體授權條款；公開可讀不自動等於允許任意再授權。
 

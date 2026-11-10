@@ -18,3 +18,10 @@
 修正過程：有效路徑預期數由誤計33改為32；瀏覽器測出損毀JSON被錯誤標成無法讀取儲存，已分開處理並重跑通過。先前沙箱socket限制導致瀏覽器啟動失敗；權限環境更新後已成功執行。
 
 GitHub CI與公開HTTPS驗證另見DELIVERY.md，不能用本機PASS代替遠端執行證據。
+
+## 公開HTTPS驗證（2026-11-11，臺北時間）
+
+- 04:26:55：正式首頁及BUG_Game.html均HTTP 200；下載內容SHA-256與本機dist一致。證據：artifacts/public/http-report.json。
+- 04:26:58：設定BUG_BASE_URL=https://roganliang.github.io/BUG-Game，執行同一完整瀏覽器測試，PASS。涵蓋首頁、demo抽選、出生與現居、兩條分支、條件選項、訊息／城市解鎖、存檔恢復、重開、CRT、鍵盤、320–1440px與無console/page errors。
+- 瀏覽器：Chromium 156.0.8078.79，行動模擬；外部實體裝置仍未驗證。
+- 發布SHA：728181b789eca27127fdc8eec8bd81f948ef5ef8；同一SHA的GitHub CI與Pages部署都成功，連結見DELIVERY.md。
