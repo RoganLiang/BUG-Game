@@ -1,7 +1,9 @@
 {
   "result": "PASS",
   "browser": "156.0.8078.79",
-  "mode": "automated mobile Chromium emulation; localhost HTTP",
+  "mode": "automated mobile Chromium emulation",
+  "tested_url": "http://127.0.0.1:4173/BUG_Game.html",
+  "recorded_at": "2026-11-10T18:51:21.378580+00:00",
   "checks": [
     "homepage",
     "demo draw and fixed route",

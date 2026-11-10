@@ -1,13 +1,15 @@
 """Localhost preview tests. Start npm start first. No public deployment."""
 import json
 import os
+from datetime import datetime, timezone
 from pathlib import Path
 from playwright.sync_api import sync_playwright
 
 root=Path(__file__).resolve().parents[1]
-artifacts=root/'artifacts'
-artifacts.mkdir(exist_ok=True)
-url='http://127.0.0.1:4173/BUG_Game.html'
+artifacts=Path(os.environ.get('BUG_ARTIFACT_DIR',str(root/'artifacts')))
+artifacts.mkdir(parents=True,exist_ok=True)
+base_url=os.environ.get('BUG_BASE_URL','http://127.0.0.1:4173').rstrip('/')
+url=base_url+'/BUG_Game.html'
 with sync_playwright() as p:
     executable=os.environ.get('BUG_CHROMIUM_PATH') or ('/usr/bin/chromium' if Path('/usr/bin/chromium').exists() else None)
     browser=p.chromium.launch(executable_path=executable,args=['--no-sandbox'])
@@ -112,7 +114,7 @@ with sync_playwright() as p:
     assert '無法存檔' in q.locator('#save-status').inner_text()
     assert q.locator('[data-choice]').count()==3
     assert not errors,errors
-    report={'result':'PASS','browser':browser.version,'mode':'automated mobile Chromium emulation; localhost HTTP','checks':['homepage','demo draw and fixed route','distinct residence','0817/0829/0841 nodes','two distinct branches','gated choices','no premature city facts','message provenance','save reload','reset cancel/confirm','new game confirmation','320–1440px no overflow across all tabs','44px map targets','keyboard Enter','CRT toggle','reduced motion','corrupt save','blocked storage','CSSOM parsed','no console/page errors'],'external_device_verified':False}
+    report={'result':'PASS','browser':browser.version,'mode':'automated mobile Chromium emulation','tested_url':url,'recorded_at':datetime.now(timezone.utc).isoformat(),'checks':['homepage','demo draw and fixed route','distinct residence','0817/0829/0841 nodes','two distinct branches','gated choices','no premature city facts','message provenance','save reload','reset cancel/confirm','new game confirmation','320–1440px no overflow across all tabs','44px map targets','keyboard Enter','CRT toggle','reduced motion','corrupt save','blocked storage','CSSOM parsed','no console/page errors'],'external_device_verified':False}
     (artifacts/'browser-report.json').write_text(json.dumps(report,ensure_ascii=False,indent=2))
     print(json.dumps(report,ensure_ascii=False))
     browser.close()
