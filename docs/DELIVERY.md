@@ -6,8 +6,8 @@
 |功能實作|完成0.2.0 demo|首頁、出生／現居、三節點、32路徑、訊息紀錄、四城訊號、結尾與重設|
 |本機測試|通過|TEST_REPORT.md、artifacts/browser-report.json與四張手機截圖|
 |本機Git|已提交|feat/paris-information-demo；功能提交166f0f3，後續交接文件提交見git log|
-|GitHub提交|未完成|尚無可用遊戲remote；建立repo被GitHub API拒絕|
-|遠端CI|未執行|ci.yml已建立，尚未推送|
+|GitHub提交|完成|公開[RoganLiang/BUG-Game](https://github.com/RoganLiang/BUG-Game)；[PR #1](https://github.com/RoganLiang/BUG-Game/pull/1)已合併，main提交76d80f2|
+|遠端CI|已通過功能分支／PR|[push CI](https://github.com/RoganLiang/BUG-Game/actions/runs/42878983736)、[PR CI](https://github.com/RoganLiang/BUG-Game/actions/runs/42879014931)均成功；功能SHA 3ebb8d5|
 |部署建立|未完成|deploy.yml已建立，尚未觸發|
 |公開上線|未完成|沒有已驗證HTTPS網址，不猜測Pages網址|
 |外部實體裝置|未驗證|已完成行動Chromium模擬，不能替代真實手機|
@@ -22,9 +22,9 @@
 - REST `POST /user/repos`：HTTP 403 `Resource not accessible by integration`。
 - 讀取installation權限顯示repository_selection=all，具備contents/workflows/actions/pull_requests寫入，缺少administration/pages管理權限。
 
-需要由帳號擁有者建立公開空白BUG-Game（不初始化README、License或gitignore），並在Settings → Pages將Source設為GitHub Actions。空repo尚無Pages選項時可先推送，再設定。這是補足平台存取權，不是重新請求同一發布授權。不得將成果推到其他作品以繞過限制。
+帳號擁有者已建立公開空白BUG-Game；已推送main快照與功能分支，PR #1完成合併。仍需要在Settings → Pages將Source設為GitHub Actions：啟用Pages的REST請求目前HTTP 403，讀取Pages為404。官方actions/configure-pages說明首次enablement需要額外管理權限，不能以GITHUB_TOKEN自動補足。這是補足平台存取權，不是重新請求同一發布授權。
 
-建立後最小接續步驟：驗證repo與權限 → 新增正確remote → 推送保留快照與功能分支 → PR／CI → main合併 → 手動deploy → 取得平台回傳的實際URL並做外部HTTP及行動瀏覽器驗證 → 補記本文件。
+最小接續步驟：Pages Source設為GitHub Actions → 確認main同一SHA的CI成功 → 手動deploy → 取得平台回傳的實際URL並做HTTP及行動瀏覽器驗證 → 補記本文件。
 
 ## 可審核預覽
 
