@@ -1,31 +1,41 @@
-# 交付狀態（2026-11-10）
+# 交付狀態（2026-11-11，Asia/Taipei）
+
+**公開試玩：https://roganliang.github.io/BUG-Game/**
 
 |狀態|結論|可核對證據|
 |---|---|---|
-|原始碼建立|完成|src/、web/與scripts/；初版快照b9e95f9|
-|功能實作|完成0.2.0 demo|首頁、出生／現居、三節點、32路徑、訊息紀錄、四城訊號、結尾與重設|
-|本機測試|通過|TEST_REPORT.md、artifacts/browser-report.json與四張手機截圖|
-|本機Git|已提交|feat/paris-information-demo；功能提交166f0f3，後續交接文件提交見git log|
-|GitHub提交|完成|公開[RoganLiang/BUG-Game](https://github.com/RoganLiang/BUG-Game)；[PR #1](https://github.com/RoganLiang/BUG-Game/pull/1)已合併，main提交76d80f2|
-|遠端CI|已通過功能分支／PR|[push CI](https://github.com/RoganLiang/BUG-Game/actions/runs/42878983736)、[PR CI](https://github.com/RoganLiang/BUG-Game/actions/runs/42879014931)均成功；功能SHA 3ebb8d5|
-|部署建立|未完成|deploy.yml已建立，尚未觸發|
-|公開上線|未完成|沒有已驗證HTTPS網址，不猜測Pages網址|
-|外部實體裝置|未驗證|已完成行動Chromium模擬，不能替代真實手機|
+|原始碼建立|完成|src/、web/、scripts/；初版快照b9e95f9保留|
+|功能實作|完成0.2.0 demo|首頁、出生／現居、三節點、32路徑、訊息紀錄、四城市、結尾與重設|
+|本機測試|通過|TEST_REPORT.md、artifacts/browser-report.json與手機截圖|
+|GitHub提交|已推送並合併|公開[RoganLiang/BUG-Game](https://github.com/RoganLiang/BUG-Game)；PR #1／#2；發布SHA見下方|
+|遠端CI|通過發布同一提交|[CI 42879644487](https://github.com/RoganLiang/BUG-Game/actions/runs/42879644487)|
+|部署建立|成功|[Deploy 42895246674](https://github.com/RoganLiang/BUG-Game/actions/runs/42895246674)，GitHub Pages|
+|公開上線|已驗證|首頁與BUG_Game.html皆HTTP 200，內容SHA-256與本機建置一致|
+|公開行動瀏覽器模擬|通過|artifacts/public/browser-report.json；兩分支、紀錄、觀測、存檔、重開、320–1440px及無console errors|
+|外部實體裝置|未驗證|模擬不能替代iOS／Android真機；仍需真人測試|
 
-## 授權與實際權限
+## 發布證據
 
-使用者已明確授權公開`RoganLiang/BUG-Game`、推送、免費CI與GitHub Pages公開試玩（含原始碼）。不是等待使用者重新同意公開。
+- 發布提交：`728181b789eca27127fdc8eec8bd81f948ef5ef8`。
+- 平台：免費GitHub Pages，build_type=workflow，HTTPS強制開啟。
+- 部署工作流程：https://github.com/RoganLiang/BUG-Game/actions/runs/42895246674 。build與deploy均success；先確認同一SHA的CI成功才上傳。
+- Deployment ID：7693384366，environment=github-pages，state=success。
+- 部署成功時間：2026-11-11 04:26:35（Asia/Taipei；GitHub原始紀錄2026-11-10T20:26:35Z）。
+- 平台回傳正式URL：https://roganliang.github.io/BUG-Game/ ，不是猜測網址。
+- 公開HTTP檢查：2026-11-11 04:26:55（臺北）；首頁與`BUG_Game.html`均200且一致。
+- 成品SHA-256：`003f807f84a97c45a33d3befbbe51a148358141141d8052e291ebf0f390c9748`。
+- 公開瀏覽器測試：2026-11-11 04:26:58（臺北），Chromium 156.0.8078.79，行動模擬PASS；證據及截圖在artifacts/public/。
 
-但目前GitHub integration不支援建立儲存庫：
+後續僅更新README與交付證據的文件提交，不會自動覆蓋此已發布版本。公開遊戲對應上述SHA；推送／PR只測試，重新發布仍須手動workflow_dispatch。
 
-- `gh repo create RoganLiang/BUG-Game --public ...`：GraphQL `Resource not accessible by integration (createRepository)`。
-- REST `POST /user/repos`：HTTP 403 `Resource not accessible by integration`。
-- 讀取installation權限顯示repository_selection=all，具備contents/workflows/actions/pull_requests寫入，缺少administration/pages管理權限。
+## 權限處理歷史（已解除發布阻塞）
 
-帳號擁有者已建立公開空白BUG-Game；已推送main快照與功能分支，PR #1完成合併。仍需要在Settings → Pages將Source設為GitHub Actions：啟用Pages的REST請求目前HTTP 403，讀取Pages為404。官方actions/configure-pages說明首次enablement需要額外管理權限，不能以GITHUB_TOKEN自動補足。這是補足平台存取權，不是重新請求同一發布授權。
+使用者已明確授權公開BUG-Game、推送、免費CI與GitHub Pages公開試玩，無需再次同意。初始GitHub integration無法建立repo或首次啟用Pages，曾回覆HTTP 403。帳號擁有者建立獨立repo，之後將Pages Source設為GitHub Actions，工具已讀取確認。現已完成推送、PR、CI、手動部署及公開驗證，沒有借用或修改其他作品、沒有付費服務。
 
-最小接續步驟：Pages Source設為GitHub Actions → 確認main同一SHA的CI成功 → 手動deploy → 取得平台回傳的實際URL並做HTTP及行動瀏覽器驗證 → 補記本文件。
+## 限制與後續
 
-## 可審核預覽
-
-本機伺服器：http://127.0.0.1:4173/（僅執行環境本機可用，非公開網址）。成品`dist/BUG_Game.html`自包含；受管Chromium封鎖file://，已用localhost測試。完整原始碼／建置成品與Git bundle另行打包供下載。
+- 首爾麻浦區固定示範及四地等權出生demo，不是完整全球抽樣。
+- 202單位／3258配額、更多章節與多人仍未實作。
+- 約5分鐘為閱讀探索目標，尚未真人計時；實體手機尚未驗證。
+- 遊戲維持免費；自願贊助方向已確認，但尚無正式收款網址或金流帳號，未開通贊助。
+- 本機可用`npm run build`與`npm start`。受管瀏覽器封鎖file://，單檔離線直接開啟仍未在該環境驗證。
