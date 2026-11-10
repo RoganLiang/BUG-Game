@@ -21,6 +21,8 @@ with sync_playwright() as p:
         page.locator('#language').select_option(locale)
         assert page.locator('html').get_attribute('lang')==locale
         assert not re.search('知允|Jiyoon|ジユン|지윤',page.locator('#home').inner_text())
+        if locale in ['en','es','fr']:
+            assert not page.locator('[aria-label]').evaluate_all("els=>els.some(e=>/[\u3400-\u9fff]/.test(e.getAttribute('aria-label')))")
         # The main action is visible without scrolling, not buried behind setup.
         box=page.locator('#start').bounding_box()
         assert box and box['y']>=0 and box['y']+box['height']<=844
@@ -66,7 +68,7 @@ with sync_playwright() as p:
                 page.locator('#'+name+'-tab').click()
                 assert page.evaluate('document.documentElement.scrollWidth <= innerWidth'),(locale,width,name)
                 if locale in ['en','es','fr']:
-                    assert not page.locator('#'+name).evaluate("e=>/[\\u3400-\\u9fff]/.test(e.innerText)"),(locale,name)
+                    assert not page.locator('#'+name).evaluate("e=>/[\u3400-\u9fff]/.test(e.innerText)"),(locale,name)
         page.locator('#reset').click()
         page.locator('#confirm-reset').click()
         assert page.locator('#continue').is_hidden()

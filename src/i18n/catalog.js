@@ -1894,5 +1894,37 @@ export const catalog=[
     "“이 영상 어디서 찍은 거야?”",
     "«¿Dónde se grabó este vídeo?»",
     "« Où cette vidéo a-t-elle été filmée ? »"
+  ],
+  [
+    "虛構17秒影像重建",
+    "Fictional 17-second clip reconstruction",
+    "架空の17秒映像の再現",
+    "가상의 17초 영상 재구성",
+    "Reconstrucción ficticia de 17 segundos",
+    "Reconstitution fictive de 17 secondes"
+  ],
+  [
+    "同一街角影像的像素重建",
+    "Pixel reconstruction of the same street corner",
+    "同じ街角のピクセル再現",
+    "같은 길모퉁이의 픽셀 재구성",
+    "Reconstrucción en píxeles de la misma esquina",
+    "Reconstitution en pixels du même carrefour"
+  ],
+  [
+    "影像比對",
+    "Compare clip versions",
+    "映像を比較",
+    "영상 비교",
+    "Comparar versiones",
+    "Comparer les versions"
+  ],
+  [
+    "遊戲分頁",
+    "Game sections",
+    "ゲームのタブ",
+    "게임 탭",
+    "Secciones del juego",
+    "Rubriques du jeu"
   ]
 ];
