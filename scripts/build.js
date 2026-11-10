@@ -1,7 +1,11 @@
-import {mkdir, readFile, writeFile} from 'node:fs/promises';
-const root = new URL('../', import.meta.url);
-let html = await readFile(new URL('web/index.html',root),'utf8');
-html = html.replace('<link rel="stylesheet" href="style.css">',`<style>${await readFile(new URL('web/style.css',root),'utf8')}</style>`).replace('<script type="module" src="app.js"></script>',`<script type="module">${(await readFile(new URL('web/game.js',root),'utf8')).replaceAll('export ','')}\n${(await readFile(new URL('web/app.js',root),'utf8')).replace(/^import .*;\n/,'')}</script>`);
+import {mkdir,readFile,writeFile} from 'node:fs/promises';
+const root=new URL('../',import.meta.url);
+const files=['src/world/cities.js','src/story/nodes.js','src/game/state.js','src/world/signals.js','src/game/engine.js','src/storage/save.js','src/ui/render.js','src/ui/scene.js','src/main.js'];
+const code=(await Promise.all(files.map(f=>readFile(new URL(f,root),'utf8')))).map(s=>s.replace(/^import .*;\n/gm,'').replace(/^export /gm,'')).join('\n');
+let html=await readFile(new URL('web/index.html',root),'utf8');
+html=html.replace('<link rel="stylesheet" href="style.css">',()=>`<style>${'\n'}PLACEHOLDER_CSS</style>`);
+const css=await readFile(new URL('web/style.css',root),'utf8');
+html=html.replace('PLACEHOLDER_CSS',()=>css).replace('<script type="module" src="app.js"></script>',()=>`<script type="module">${code}</script>`);
 await mkdir(new URL('dist/',root),{recursive:true});
-for (const name of ['index.html','BUG_Game.html']) await writeFile(new URL('dist/'+name,root),html);
-console.log('Built standalone dist/index.html and dist/BUG_Game.html');
+for(const name of ['index.html','BUG_Game.html'])await writeFile(new URL('dist/'+name,root),html);
+console.log('Built self-contained dist/index.html and dist/BUG_Game.html');
