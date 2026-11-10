@@ -33,6 +33,7 @@ jobs:
             sleep 1
           done
           npm run test:browser
+          npm run test:locales
       - uses: actions/upload-artifact@v4
         if: always()
         with:

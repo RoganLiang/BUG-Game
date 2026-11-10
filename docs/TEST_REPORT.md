@@ -25,3 +25,12 @@ GitHub CI與公開HTTPS驗證另見DELIVERY.md，不能用本機PASS代替遠端
 - 04:26:58：設定BUG_BASE_URL=https://roganliang.github.io/BUG-Game，執行同一完整瀏覽器測試，PASS。涵蓋首頁、demo抽選、出生與現居、兩條分支、條件選項、訊息／城市解鎖、存檔恢復、重開、CRT、鍵盤、320–1440px與無console/page errors。
 - 瀏覽器：Chromium 156.0.8078.79，行動模擬；外部實體裝置仍未驗證。
 - 發布SHA：728181b789eca27127fdc8eec8bd81f948ef5ef8；同一SHA的GitHub CI與Pages部署都成功，連結見DELIVERY.md。
+
+## 0.3 開場與多語（2026-11-11，臺北）
+
+- `npm run build`、`npm run check`、`npm test`通過，現有9組測試包含32路徑、六語字典欄位／劇情／資訊完整性、英文／西文／法文無中文殘留。
+- `npm run test:browser`通過原有單人完整流程，主入口可直接進入，出生抽選為可選。
+- `npm run test:locales`逐一驗證六語、320–1440px、存檔不因切語言而變動、切語言後重載／繼續、片段播放／暫停／拖動、A/B字幕、重設與無console錯誤。證據在artifacts/locales-report.json及home-*.png。
+- 實際測出時間軸讀值被暫停回寫覆蓋，已修正；截圖也發現英文頁首品牌換行，已修正並增加品牌不超出頁首的檢查。
+- 非中文翻譯未做母語校閱，仍屬初版；趣味性未做真人比較測試。
+- 公開版是否已部署0.3，以DELIVERY.md對應SHA為準，不能用本機通過代替上線。

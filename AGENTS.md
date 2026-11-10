@@ -32,5 +32,8 @@ npm run test:browser
 ## 授權與部署
 2026-11-10使用者明確授權公開RoganLiang/BUG-Game、推送、免費CI、GitHub Pages公開試玩（包含原始碼）。同一範圍不重問。這不授權付費方案、買網域、公開私人素材或修改其他作品。CI與發布分離：推送／PR只測試，公開部署workflow必須手動觸發，發布前先確認對應提交CI通過。新增範圍再確認。
 
+## 0.3介面與語言
+遊戲介面版本0.3.0，但GAME_VERSION=0.2.0是保留的存檔資料格式，不要因改文案就改動造成舊存檔失效。新增語言使用src/i18n/catalog.js六欄（繁中、英、日、韓、西、法），src/i18n/runtime.js只翻譯顯示文字，不改canonical故事ID、條件或決策標籤。翻譯必須覆蓋所有節點／選項／資訊內容並跑npm run test:locales。非中文仍待母語校閱。
+
 ## 後續
 202單位資料、更多章節、持續世界／多人屬後續里程碑，不阻塞現有MVP。未做實體手機測試不可稱外部裝置已驗證。每次回報用RESULT、CHANGED FILES、TESTS、GIT、PREVIEW/DEPLOY、BLOCKERS、NEXT，附實際證據。

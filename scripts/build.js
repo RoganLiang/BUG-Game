@@ -1,6 +1,6 @@
 import {mkdir,readFile,writeFile} from 'node:fs/promises';
 const root=new URL('../',import.meta.url);
-const files=['src/world/cities.js','src/story/nodes.js','src/game/state.js','src/world/signals.js','src/game/engine.js','src/storage/save.js','src/ui/render.js','src/ui/scene.js','src/main.js'];
+const files=['src/world/cities.js','src/story/nodes.js','src/game/state.js','src/world/signals.js','src/game/engine.js','src/storage/save.js','src/ui/render.js','src/ui/clip.js','src/i18n/catalog.js','src/i18n/runtime.js','src/main.js'];
 const code=(await Promise.all(files.map(f=>readFile(new URL(f,root),'utf8')))).map(s=>s.replace(/^import .*;\n/gm,'').replace(/^export /gm,'')).join('\n');
 let html=await readFile(new URL('web/index.html',root),'utf8');
 html=html.replace('<link rel="stylesheet" href="style.css">',()=>`<style>${'\n'}PLACEHOLDER_CSS</style>`);
