@@ -1,40 +1,59 @@
-# 皇蛾效應 / BUG
+# 《皇蛾效應》BUG
 
-手機直式 8-bit 風格互動敘事 MVP 0.1。四個等機率出生地、三段巴黎前導、八條選擇路徑、四城市全球事件觀測台。每次選擇會更新角色數值與指定城市的風險，並在本機儲存進度。事件與劇情均為新撰寫的虛構內容，非即時資料。
+**0.2.0 · 原創單人敘事試玩 · 繁體中文（臺灣）**
 
-## 執行
+一段17秒影片，一位韓國朋友，一扇巴黎的窗。查證、聯絡、觀察、忽略或傳播，改變你取得的情報與訊息擴散。所有人物與危機皆虛構，城市訊號不等於真實新聞。
 
-需要 Node.js 18+ 與 Python 3，不需安裝 npm 套件。
+## 本機試玩
+
+需要Node.js 24+及Python 3.12+；遊戲本身沒有外部套件、帳號、後端或付費服務。
 
 ```sh
 npm run build
-npm test
 npm start
 ```
 
-開啟 http://localhost:4173 。也可直接開啟 `dist/BUG_Game.html`，建置後是無外部依賴的單一檔案；瀏覽器禁止儲存時會明確提示，仍可遊玩。
+開啟 http://127.0.0.1:4173/ 。`dist/BUG_Game.html`是內含JS、CSS與像素畫面的單檔成品；可複製下載，不依賴CDN。受管瀏覽器可能禁止file://，此時使用上述本機伺服器。單檔直接開啟未在目前受管Chromium驗證，已驗證localhost方式。
 
-瀏覽器整合測試需 Python Playwright 與 `/usr/bin/chromium`；先啟動伺服器，再執行 `python tests/browser.py`。截圖存放於 `artifacts/`。
+## 玩法與範圍
 
-## 結構
+1. 開始遊戲後抽選demo出生地，或選固定示範：30歲、出生首爾麻浦區。現居地獨立固定巴黎第11區，重抽不覆蓋。
+2. 閱讀2026-11-01的08:17／08:29／08:41三段劇情；每次選擇有時間、資訊、數值或關係／擴散效果。
+3. 從訊息紀錄查看來源、觀察／聲稱時間、證據類型與可信狀態；從全球觀測查看巴黎、首爾、東京、紐約已解鎖訊號。
+4. 到結尾回顧本輪差異，或確認重設後走另一條分支。首頁可以繼續本機存檔。
 
-- `web/game.js`：出生地、劇情、事件、不可變狀態轉換、重播驗證存檔。
-- `web/app.js`：畫面、互動、本機儲存及原創程序化像素插畫。
-- `web/style.css`：直式響應版面、鍵盤焦點、減少動態效果設定。
-- `scripts/build.js`：產生單檔 HTML，可離線開啟。
-- `tests/`：八條劇情路徑、數值與事件變化、損毀存檔及瀏覽器整合測試。
+32條有效路徑，設計供約5分鐘閱讀探索，未做真人計時驗證。鍵盤Tab移動、Enter／空白鍵選擇；不自動播放聲音。CRT預設關閉，可勾選，尊重減少動態偏好。
 
-## 原始碼查找紀錄（2026-11-07）
+四地出生各25%僅為demo，不是完整全球抽樣。202單位／3258配額仍待逐筆核對。尚無即時新聞、全球真相推演、多人或後續章節。存檔只在當前瀏覽器；清除網站資料會遺失。
 
-工作區初始沒有遊戲原始碼。GitHub 連線列出兩個可存取儲存庫，讀取預設分支的遞迴檔案樹（均未截斷）：
+## 檢查與測試
 
-- `RoganLiang/wpicccc`，HEAD `c8efe88c240f0378d9e900ebe81afc2af6861f05`，內容為 `xingdian-tu`。
-- `RoganLiang/RG-AI-Research-Lab`，HEAD `10c7d2b599e2e840475b24e5ee0e41d3f6b19426`，內容為研究文件與測試。
+```sh
+npm run build
+npm run check
+npm test
+# 先啟動npm start，另一個終端執行：
+python -m pip install -r tests/requirements.txt
+python -m playwright install chromium
+npm run test:browser
+```
 
-兩者均未找到 `BUG_Game.html` 或 `bug-game-mvp`。此結論限於可存取儲存庫的預設分支與目前工作區，不代表其他分支、歷史或帳號中不存在。本專案依需求獨立重建，未修改上述儲存庫或星靛圖。
+瀏覽器測試自動使用系統`/usr/bin/chromium`（如有）或Playwright安裝的Chromium，可用`BUG_CHROMIUM_PATH`指定。測試產出在artifacts/，包含手機截圖與JSON證據。CI執行同一套檢查並上傳測試產物。測試涵蓋32路徑、圖形連通、條件、effects、時間、出生／現居、隱藏情報、存檔、重開、鍵盤、320～1440px版面及console errors。
 
-## 參考與限制
+## 結構與交接
 
-依使用者提供的 [Yazi](https://github.com/sxyazi/yazi)，閱讀其 README 與根目錄，參考職責分離、清楚的操作回饋、版本狀態與使用文件；沒有複製其程式碼或美術。此遊戲使用輕量純 JavaScript，無須移植 Rust 或終端檔案管理架構。
+- `src/story/nodes.js`：故事節點與資訊項目。
+- `src/game/`：狀態、條件／effects、決策重播與玩家投影。
+- `src/world/`：demo出生地、城市及可見訊號。
+- `src/storage/`、`src/ui/`、`src/main.js`：存檔、渲染、原創程序像素畫與互動。
+- `web/`、`scripts/`：HTML模板、樣式與單檔建置／檢查。
+- `tests/`、`.github/workflows/`：測試、CI與獨立手動發布。
+- [AGENTS.md](AGENTS.md)、[DECISIONS.md](DECISIONS.md)、[CHANGELOG.md](CHANGELOG.md)、[TASKS.md](TASKS.md)：後續工作依據。
 
-目前完成巴黎前導；全球事件為固定模擬，尚無後端、多人同步、即時新聞與後續章節。存檔僅在當前瀏覽器，清除網站資料會遺失。未公開部署、未推送遠端；公開部署須取得使用者授權。
+初始工作區與可存取儲存庫的預設分支未找到原版BUG_Game.html／bug-game-mvp；這是新實作，不是舊作還原。0.1快照保留於提交b9e95f9，0.2依最新交接規格更新，未修改其他作品。參考[Yazi](https://github.com/sxyazi/yazi)的模組職責、測試／發布分離與文件方式，沒有複製其程式碼或美術。
+
+## GitHub／發布狀態
+
+2026-11-10使用者已授權公開`RoganLiang/BUG-Game`、推送、免費CI及GitHub Pages公開試玩。推送不自動發布，只有手動deploy工作流程會發布通過CI的提交。實際儲存庫、提交SHA、HTTPS網址、部署成功及外部驗證狀態，以[交付證據](docs/DELIVERY.md)為準；授權不代表已上線。
+
+尚未宣告軟體授權條款；公開可讀不自動等於允許任意再授權。

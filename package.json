@@ -1,1 +1,1 @@
-{"name":"moth-effect-bug","version":"0.1.0","private":true,"type":"module","scripts":{"build":"node scripts/build.js","test":"node --test tests/*.test.js","start":"python -m http.server 4173 --bind 0.0.0.0 --directory dist"}}
+{"name":"moth-effect-bug","version":"0.2.0","private":true,"type":"module","scripts":{"build":"node scripts/build.js","check":"node scripts/check.js","test":"node --test --test-isolation=none tests/game.test.js","test:browser":"python tests/browser.py","start":"python -m http.server 4173 --bind 127.0.0.1 --directory dist"}}

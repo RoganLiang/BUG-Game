@@ -1,0 +1,28 @@
+{
+  "result": "PASS",
+  "browser": "156.0.8078.79",
+  "mode": "automated mobile Chromium emulation; localhost HTTP",
+  "checks": [
+    "homepage",
+    "demo draw and fixed route",
+    "distinct residence",
+    "0817/0829/0841 nodes",
+    "two distinct branches",
+    "gated choices",
+    "no premature city facts",
+    "message provenance",
+    "save reload",
+    "reset cancel/confirm",
+    "new game confirmation",
+    "320–1440px no overflow across all tabs",
+    "44px map targets",
+    "keyboard Enter",
+    "CRT toggle",
+    "reduced motion",
+    "corrupt save",
+    "blocked storage",
+    "CSSOM parsed",
+    "no console/page errors"
+  ],
+  "external_device_verified": false
+}
