@@ -1,4 +1,32 @@
-# 交付狀態（2026-11-11，Asia/Taipei）
+# 最新交付：0.3.0（2026-11-11，Asia/Taipei）
+
+**試玩：https://roganliang.github.io/BUG-Game/**
+
+|狀態|結論|證據|
+|---|---|---|
+|原始碼／功能|已建立並推送|PR #4，互動17秒影像、直接開始、可選出生設定、六語；仍為三節點32路徑|
+|本機測試|PASS|build、check、9組邏輯／翻譯檢查、完整流程、六語瀏覽器測試|
+|發布同一SHA的CI|success|[42924395693](https://github.com/RoganLiang/BUG-Game/actions/runs/42924395693)|
+|GitHub Pages部署|success|[42924768674](https://github.com/RoganLiang/BUG-Game/actions/runs/42924768674)，Deployment ID 7697297639|
+|公開HTTPS|已驗證|首頁與BUG_Game.html皆200，與dist成品逐位元組一致，UI版本0.3.0|
+|公開瀏覽器流程|PASS|artifacts/public-v0.3/browser-report.json，兩分支、訊息、觀測、存檔、重設等|
+|公開六語流程|PASS|artifacts/public-v0.3/locales-report.json；繁中／英／日／韓／西／法；切語言不改存檔、重載、影像控制、320–1440px|
+|外部真機／母語校閱|未驗證|Chromium行動模擬不能取代真人與母語玩家|
+|管理統計／贊助|尚未啟用|沒有在線人數、留存／轉換資料或金流；未建立Supabase project或付費服務|
+
+發布SHA：`de325997ad64c9b91d3dc618c25c4b17927429e1`。成功時間：2026-11-11 **07:36:58**（臺北；原始2026-11-10T23:36:58Z）。
+
+正式URL由部署API回傳，未猜測：https://roganliang.github.io/BUG-Game/ 。HTTP檢查07:37:25、完整流程07:37:30、六語流程07:37:51（臺北）皆通過。
+
+成品SHA-256：`b970966756bfe6241f6db2fd63da28b50a863b33791ed2434acaa3743c24420a`。證據與十張截圖存於artifacts/public-v0.3/。
+
+語言與遊戲存檔分開，既有0.2資料格式與儲存鍵維持不變。非中文為初版翻譯；趣味性尚未做真人對照測試。已實際查看使用者提供的1in8b.life首頁、出生揭曉與遊玩畫面，具體借鏡與界線見REFERENCE_1IN8B.md。
+
+下方保留首次0.2發布歷史。後續只更新文件的提交不會自動覆蓋已發布的0.3；公開版對應上述SHA。
+
+---
+
+# 0.2首次交付歷史（2026-11-11，Asia/Taipei）
 
 **公開試玩：https://roganliang.github.io/BUG-Game/**
 

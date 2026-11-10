@@ -56,7 +56,7 @@ npm run test:browser
 
 ## GitHub／發布狀態
 
-2026-11-10使用者已授權公開`RoganLiang/BUG-Game`、推送、免費CI及GitHub Pages公開試玩。推送不自動發布，只有手動deploy工作流程會發布通過CI的提交。原始碼已推送至[RoganLiang/BUG-Game](https://github.com/RoganLiang/BUG-Game)，PR #1／#2與CI已完成；GitHub Pages已於2026-11-11 04:26（臺北時間）成功發布，公開HTTPS與行動Chromium流程驗證通過。實際提交SHA、HTTPS網址、部署成功及外部驗證狀態，以[交付證據](docs/DELIVERY.md)為準；授權不代表已上線。
+2026-11-10使用者已授權公開`RoganLiang/BUG-Game`、推送、免費CI及GitHub Pages公開試玩。推送不自動發布，只有手動deploy工作流程會發布通過CI的提交。原始碼已推送至[RoganLiang/BUG-Game](https://github.com/RoganLiang/BUG-Game)，PR #1／#2與CI已完成；GitHub Pages首次發布於2026-11-11 04:26，0.3.0於同日07:36（臺北時間）更新成功；公開HTTPS、完整流程及六語行動Chromium驗證通過。實際提交SHA、HTTPS網址、部署成功及外部驗證狀態，以[交付證據](docs/DELIVERY.md)為準；授權不代表已上線。
 
 尚未宣告軟體授權條款；公開可讀不自動等於允許任意再授權。
 
