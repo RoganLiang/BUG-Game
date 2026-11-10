@@ -1,0 +1,20 @@
+{
+  "checked_at": "2026-11-11T07:37:25.732203+08:00",
+  "deployed_sha": "de325997ad64c9b91d3dc618c25c4b17927429e1",
+  "checks": [
+    {
+      "url": "https://roganliang.github.io/BUG-Game/",
+      "http_status": 200,
+      "sha256": "b970966756bfe6241f6db2fd63da28b50a863b33791ed2434acaa3743c24420a",
+      "matches_build": true,
+      "version_0_3_0": true
+    },
+    {
+      "url": "https://roganliang.github.io/BUG-Game/BUG_Game.html",
+      "http_status": 200,
+      "sha256": "b970966756bfe6241f6db2fd63da28b50a863b33791ed2434acaa3743c24420a",
+      "matches_build": true,
+      "version_0_3_0": true
+    }
+  ]
+}
