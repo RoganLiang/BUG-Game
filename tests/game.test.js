@@ -4,7 +4,7 @@ import {fresh,playerView,minuteValue} from '../src/game/state.js';
 import {act,allows,currentNode,selectBirthplace,randomBirthplace,startStory,replaySave,knownInformation,summary} from '../src/game/engine.js';
 import {nodes,information} from '../src/story/nodes.js';
 import {birthplaces} from '../src/world/cities.js';
-import {storyMarkup,worldMarkup,recordsMarkup} from '../src/ui/render.js';
+import {storyMarkup,worldMarkup,recordsMarkup,characterMarkup} from '../src/ui/render.js';
 import {loadSave,persistSave,SAVE_KEY} from '../src/storage/save.js';
 const start=()=>startStory(selectBirthplace(fresh('test-run'),'seoul-mapo'));
 function paths(s=start()){const n=currentNode(s);if(n.id==='ending')return [s];return n.choices.filter(c=>allows(c.availabilityConditions,s)).flatMap(c=>paths(act(s,n.id,c.id)));}
@@ -26,3 +26,19 @@ test('every allowed action changes state and guarded, stale, duplicate actions a
 test('hidden world state and unacquired city facts never reach UI projections',()=>{let s=start();let view=playerView(s);assert.ok(!('worldState'in view));const html=worldMarkup(view,null)+recordsMarkup(view)+storyMarkup(view);assert.ok(!html.includes(information.reply.content));assert.ok(!html.includes(information.window.content));assert.ok(!html.includes(information.tokyo.content));assert.equal(view.visibleSignals.length,1);s=act(s,'video-0817','ignore-video');assert.equal(s.visibleSignals.length,2);s=act(s,'friend-0829','wait-window');assert.equal(s.visibleSignals.length,2);assert.ok(!s.knownFacts.includes('tokyo'));const other=act(act(start(),'video-0817','verify-video'),'friend-0829','trace-source');assert.equal(other.visibleSignals.length,4);assert.ok(!worldMarkup(playerView(other)).includes('undetermined'));});
 test('save replay restores all branches, ignores tampered derived data, and rejects invalid history or versions',()=>{for(const s of endings)assert.deepEqual(replaySave(JSON.parse(JSON.stringify(s))),s);const s=start();const modified={...s,stats:{energy:999},knownFacts:['reply'],worldState:{videoCause:'revealed'}};assert.deepEqual(replaySave(modified),s);for(const value of [null,{}, {...s,gameVersion:'0.1.0'},{...s,birthplaceId:'fake'}, {...s,decisionHistory:[{nodeId:'window-0841',choiceId:'spread-theory'}]}])assert.equal(replaySave(value),null);});
 test('storage failure and incompatible versions are handled safely; fresh resets all run-specific fields',()=>{const data=new Map(),storage={getItem:k=>data.get(k)||null,setItem:(k,v)=>data.set(k,v)};const s=endings[0];persistSave(storage,s);assert.deepEqual(loadSave(storage).state,s);storage.setItem(SAVE_KEY,'bad JSON');assert.equal(loadSave(storage).state,null);storage.setItem(SAVE_KEY,JSON.stringify({...s,gameVersion:'old'}));assert.match(loadSave(storage).message,/不相容/);assert.match(persistSave(null,s),/無法存檔/);assert.equal(loadSave(null).state,null);const blank=fresh('new-run');assert.equal(blank.birthplaceId,null);assert.equal(blank.residenceId,'paris-11');assert.deepEqual(blank.knownFacts,[]);assert.deepEqual(blank.decisionHistory,[]);assert.deepEqual(blank.visibleSignals,[]);assert.notEqual(blank.runId,s.runId);});
+
+import {catalog} from '../src/i18n/catalog.js';
+import {supportedLanguages,setLanguage,language,translateText} from '../src/i18n/runtime.js';
+test('six complete translation columns, stable language fallback, full narrative coverage',()=>{
+ assert.equal(supportedLanguages.length,6);assert.equal(new Set(catalog.map(r=>r[0])).size,catalog.length);
+ for(const row of catalog){assert.equal(row.length,6);assert.ok(row.every(v=>typeof v==='string'&&v.length>0));}
+ const sources=new Set(catalog.map(r=>r[0]));
+ for(const node of nodes){assert.ok(sources.has(node.title),node.title);assert.ok(sources.has(node.text),node.text);for(const c of node.choices){assert.ok(sources.has(c.label),c.label);assert.ok(sources.has(c.description),c.description);}}
+ for(const item of Object.values(information))for(const key of ['content','origin','evidenceType','verificationStatus'])assert.ok(sources.has(item[key]),item[key]);
+ setLanguage('en');assert.equal(language(),'en');setLanguage('invalid');assert.equal(language(),'zh-Hant');
+ for(const [code]of supportedLanguages)assert.ok(translateText('皇蛾效應',code));
+});
+test('all branches translate visible renderers without leftover Chinese in English, Spanish or French',()=>{
+ function walk(s){for(const code of ['en','es','fr'])for(const fn of [storyMarkup,worldMarkup,recordsMarkup,characterMarkup])for(const line of fn(playerView(s)).replace(/<[^>]*>/g,'\n').split('\n'))assert.ok(!/[\u3400-\u9fff]/.test(translateText(line,code)),code+': '+line);for(const c of currentNode(s)?.choices||[])if(allows(c.availabilityConditions,s))walk(act(s,currentNode(s).id,c.id));}
+ const setup=selectBirthplace(fresh(),'seoul-mapo');walk(setup);walk(startStory(setup));
+});

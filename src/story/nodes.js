@@ -16,17 +16,17 @@ export const information = {
   pause:{id:'pause',origin:'你的私人筆記',observedAt:'08:42',claimedAt:null,content:'你關閉推播，保留目前紀錄。資訊缺口沒有消失，但你決定暫不擴散。',evidenceType:'行動紀錄',verificationStatus:'已記錄',visibility:'private'}
 };
 export const nodes = [
- {id:'video-0817',time:'08:17',locationId:'paris-11',title:'17秒，兩個互相矛盾的版本',text:'2026年11月1日。巴黎第11區的清晨，你的手機亮起。一段17秒影片被冠上「全球同時發生」的標題。兩個轉貼版本的字幕、地點與時間卻互相矛盾。你先做什麼？',entryConditions:[],entryFacts:['clip'],choices:[
+ {id:'video-0817',time:'08:17',locationId:'paris-11',title:'17秒，兩個互相矛盾的版本',text:'你收到同一段17秒影像的兩個版本。地點不同，時間也不同。你要先查清楚，還是把它傳出去？',entryConditions:[],entryFacts:['clip'],choices:[
   {id:'verify-video',label:'查看影片，查證兩個版本',description:'花5分鐘比對，取得版本矛盾紀錄',nextNodeId:'friend-0829',availabilityConditions:[],effects:{minutes:5,facts:['metadata'],flags:{verified:true},stats:{insight:12,energy:-5},spread:0}},
   {id:'share-video',label:'傳播影片，詢問群組是否知情',description:'花3分鐘轉貼，可能擴散未證實訊息',nextNodeId:'friend-0829',availabilityConditions:[],effects:{minutes:3,facts:['forwarded'],flags:{shared:true},stats:{influence:12,energy:-3},spread:2}},
   {id:'ignore-video',label:'忽略推播，先留一點距離',description:'花1分鐘暫停，保留能量但缺少查證',nextNodeId:'friend-0829',availabilityConditions:[],effects:{minutes:1,facts:['ignored'],flags:{paused:true},stats:{energy:6},spread:0}}
  ]},
- {id:'friend-0829',time:'08:29',locationId:'paris-11',title:'首爾朋友的訊息',text:'08:29，韓國朋友知允確認影片正在流傳，但來源時間戳不一致。她的回覆證明了「有人在傳」，並沒有證明影片中的事件。',entryConditions:[],entryFacts:['friend'],choices:[
+ {id:'friend-0829',time:'08:29',locationId:'paris-11',title:'首爾朋友的訊息',text:'08:29，知允的訊息跳了出來。她也收到了。你要相信朋友、追查來源，還是親自看看窗外？',entryConditions:[],entryFacts:['friend'],choices:[
   {id:'contact-friend',label:'聯絡知允，詢問她親眼看見什麼',description:'花5分鐘取得私人回覆，仍非全城真相',nextNodeId:'window-0841',availabilityConditions:[],effects:{minutes:5,facts:['reply'],flags:{contacted:true},stats:{empathy:12,energy:-4},relationship:1,spread:0}},
   {id:'trace-source',label:'沿轉貼鏈查證原始來源',description:'花7分鐘追查，同時看見東京與紐約的傳聞',nextNodeId:'window-0841',availabilityConditions:[],effects:{minutes:7,facts:['source','tokyo','ny'],flags:{traced:true},stats:{insight:10,energy:-7},spread:0}},
   {id:'wait-window',label:'不再追逐推播，準備觀察窗外',description:'花2分鐘整理已知資訊，保留能量',nextNodeId:'window-0841',availabilityConditions:[],effects:{minutes:2,facts:[],flags:{waited:true},stats:{energy:4},spread:0}}
  ]},
- {id:'window-0841',time:'08:41',locationId:'paris-11',title:'窗外，是你能看見的世界',text:'08:41，你從巴黎住所向窗外觀察。路口照常運作，一輛救護車駛過。這些景象與影片究竟有沒有關聯？你只有一扇窗，沒有全球的答案。',entryConditions:[],entryFacts:['window'],choices:[
+ {id:'window-0841',time:'08:41',locationId:'paris-11',title:'窗外，是你能看見的世界',text:'08:41，你走到巴黎住所窗邊。救護車駛過。這能證明影片是真的嗎？',entryConditions:[],entryFacts:['window'],choices:[
   {id:'compare-window',label:'觀察路口，與先前查證紀錄比對',description:'需要先查證影片或來源；花4分鐘記錄限制',nextNodeId:'ending',availabilityConditions:[{anyFlags:['verified','traced']}],effects:{minutes:4,facts:['compared'],flags:{compared:true},stats:{insight:12,energy:-4},spread:0}},
   {id:'share-qualified',label:'聯絡群組，只分享有範圍的觀察',description:'花5分鐘註明時間與視野，降低擴散',nextNodeId:'ending',availabilityConditions:[],effects:{minutes:5,facts:['careful'],flags:{qualified:true},stats:{empathy:8,influence:6},spread:-1}},
   {id:'spread-theory',label:'傳播「全球異常」推測',description:'花2分鐘公開推測，聲量增加、證據不變',nextNodeId:'ending',availabilityConditions:[],effects:{minutes:2,facts:['amplified'],flags:{amplified:true},stats:{influence:16,energy:-2},spread:3}},

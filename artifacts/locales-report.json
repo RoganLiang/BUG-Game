@@ -1,0 +1,29 @@
+{
+  "result": "PASS",
+  "languages": [
+    "zh-Hant",
+    "en",
+    "ja",
+    "ko",
+    "es",
+    "fr"
+  ],
+  "tested_base_url": "http://127.0.0.1:4173",
+  "recorded_at": "2026-11-10T23:33:27.054483+00:00",
+  "checks": [
+    "main action in first viewport",
+    "fictional clip A/B and timeline",
+    "play/pause",
+    "single-click start",
+    "same story effects across languages",
+    "language switch preserves save",
+    "language survives reload",
+    "six-language story/records/world",
+    "320–1440px no overflow",
+    "no Chinese fallback in en/es/fr",
+    "reset preserves language and resets clip",
+    "no console/page errors"
+  ],
+  "native_speaker_review": false,
+  "physical_device_verified": false
+}
