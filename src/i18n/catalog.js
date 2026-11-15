@@ -1,3 +1,4 @@
+import {awakeningCatalog} from './awakening-catalog.js';
 export const catalog=[
   [
     "皇蛾效應 BUG｜巴黎的17秒",
@@ -1928,3 +1929,6 @@ export const catalog=[
     "Rubriques du jeu"
   ]
 ];
+
+const knownCatalogSources=new Set(catalog.map(r=>r[0]));
+for(const row of awakeningCatalog)if(!knownCatalogSources.has(row[0])){catalog.push(row);knownCatalogSources.add(row[0]);}

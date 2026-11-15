@@ -1,3 +1,6 @@
+import {startAwakening,useMicroPower} from './story/awakening.js';
+import {getStation} from './world/stations.js';
+import {paintArrival} from './ui/arrival-scene.js';
 import {fresh,playerView} from './game/state.js';
 import {selectBirthplace,randomBirthplace,startStory,act} from './game/engine.js';
 import {loadSave,persistSave} from './storage/save.js';
@@ -15,17 +18,19 @@ const loaded=loadSave(storage);let state=loaded.state||fresh(),saved=loaded.stat
 function persist(){saveMessage=persistSave(storage,state);saved=structuredClone(state);}
 function render(focus=false){
  document.body.classList.toggle('in-story',screen!=='home');
- document.body.classList.toggle('view-clip',screen==='home'||state.currentNodeId==='video-0817');
+ document.body.classList.toggle('view-clip',screen==='home'||Boolean(state.scenarioId)||state.currentNodeId==='video-0817');
+ document.body.classList.toggle('global-opening',screen==='home'||Boolean(state.scenarioId));
  $('#save-status').textContent=saveMessage;$('#home').hidden=screen!=='home';$('#play').hidden=screen==='home';
- $('#continue').disabled=!saved;$('#continue').hidden=!saved;
- $('#character').innerHTML=characterMarkup(playerView(state));$('#scene-place').textContent='2026-11-01 · PARIS 11';$('#scene-time').textContent=state.gameTime;
+ $('#continue').disabled=!saved;$('#continue').hidden=!saved;$('#legacy-save-note').hidden=!(saved&&saved.gameVersion==='0.2.0');
+ $('#character').innerHTML=characterMarkup(playerView(state));$('#scene-place').textContent=getStation(state.scenarioId)?.names[0]||'PARIS 11';$('#scene-time').textContent=state.gameTime;
  for(const name of ['story','records','world']){$('#'+name).hidden=tab!==name;$('#'+name+'-tab').setAttribute('aria-current',tab===name?'page':'false');}
  $('#story').innerHTML=storyMarkup(playerView(state));$('#records').innerHTML=recordsMarkup(playerView(state));$('#world').innerHTML=worldMarkup(playerView(state),selected);
+ if(state.scenarioId){paintArrival(state);$('#clip-caption').textContent=getStation(state.scenarioId).names[0];$('#clip-clock').textContent=state.gameTime;}else if(screen==='home'){$('#clip-caption').textContent='WORLD / ARRIVAL';$('#clip-clock').textContent='06 CHOICES';}
  translate();
  if(focus){const heading=$(screen==='home'?'#home h2':'#'+tab+' h2');heading?.focus({preventScroll:true});heading?.scrollIntoView({block:'nearest',behavior:'instant'});}
 }
 let startWithSetup=false;
-function newJourney(){clip.pause();state=startWithSetup?randomBirthplace(fresh()):startStory(selectBirthplace(fresh(),'seoul-mapo'));screen='play';tab='story';persist();render(true);}
+function newJourney(){clip.pause();state=startAwakening(randomBirthplace(fresh()));if(startWithSetup)state.currentNodeId='setup';screen='play';tab='story';persist();render(true);}
 function requestJourney(setup){startWithSetup=setup;if(saved&&saved.currentNodeId!=='home')$('#new-dialog').showModal();else newJourney();}
 $('#setup-start').onclick=()=>requestJourney(true);
 $('#start').onclick=()=>requestJourney(false);
@@ -41,6 +46,7 @@ $('#play').addEventListener('click',event=>{
  if(button.dataset.choice){const next=act(state,button.dataset.node,button.dataset.choice);if(next!==state){state=next;persist();$('#live-status').textContent=`已記錄選擇，目前遊戲時間 ${state.gameTime}`;render(true);}return;}
  if(button.dataset.city){selected=button.dataset.city;render();$('#city-'+selected).scrollIntoView({block:'nearest'});return;}
  const action=button.dataset.action;
+ if(action==='use-power'){state=useMicroPower(state);persist();render(true);return;}
  if(action==='begin'){state=startStory(state);persist();render(true);}
  else if(action==='draw'||action==='fixed'){state=action==='draw'?randomBirthplace(state):selectBirthplace(state,'seoul-mapo');persist();render(true);}
  else if(action==='world'||action==='records'){tab=action;render(true);}

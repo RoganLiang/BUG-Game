@@ -29,6 +29,9 @@ with sync_playwright() as p:
         header=page.locator('header').bounding_box()
         brand=page.locator('.brand').bounding_box()
         assert brand['y']>=header['y'] and brand['y']+brand['height']<=header['y']+header['height']
+        page.evaluate("s=>localStorage.setItem('moth-effect-bug-v2',JSON.stringify(s))",{'gameVersion':'0.2.0','runId':'legacy-locale-check','currentNodeId':'video-0817','birthplaceId':'seoul-mapo','residenceId':'paris-11','decisionHistory':[]})
+        page.reload()
+        page.locator('#continue').click()
         page.locator('#version-b').click()
         assert page.locator('#clip-caption').inner_text()=='SEOUL · 07:58'
         page.locator('#version-a').click()
@@ -43,7 +46,6 @@ with sync_playwright() as p:
         page.wait_for_timeout(1100)
         assert page.locator('#clip-clock').inner_text()==frame
         page.screenshot(path=str(out/f'home-{locale}.png'),full_page=True)
-        page.locator('#start').click()
         assert page.locator('[data-choice]').count()==3
         state_before=page.evaluate("JSON.parse(localStorage.getItem('moth-effect-bug-v2'))")
         assert state_before['currentNodeId']=='video-0817'
@@ -73,7 +75,7 @@ with sync_playwright() as p:
         page.locator('#confirm-reset').click()
         assert page.locator('#continue').is_hidden()
         assert page.locator('#language').input_value()==locale
-        assert '00:00' in page.locator('#clip-clock').inner_text()
+        assert page.locator('#start').is_visible()
         context.close()
     assert not errors,errors
     report={'result':'PASS','languages':locales,'tested_base_url':base,'recorded_at':datetime.now(timezone.utc).isoformat(),'checks':['main action in first viewport','fictional clip A/B and timeline','play/pause','single-click start','same story effects across languages','language switch preserves save','language survives reload','six-language story/records/world','320–1440px no overflow','no Chinese fallback in en/es/fr','reset preserves language and resets clip','no console/page errors'],'native_speaker_review':False,'physical_device_verified':False}

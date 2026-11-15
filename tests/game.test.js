@@ -42,3 +42,35 @@ test('all branches translate visible renderers without leftover Chinese in Engli
  function walk(s){for(const code of ['en','es','fr'])for(const fn of [storyMarkup,worldMarkup,recordsMarkup,characterMarkup])for(const line of fn(playerView(s)).replace(/<[^>]*>/g,'\n').split('\n'))assert.ok(!/[\u3400-\u9fff]/.test(translateText(line,code)),code+': '+line);for(const c of currentNode(s)?.choices||[])if(allows(c.availabilityConditions,s))walk(act(s,currentNode(s).id,c.id));}
  const setup=selectBirthplace(fresh(),'seoul-mapo');walk(setup);walk(startStory(setup));
 });
+
+import {stationPool,pickStation,getStation} from '../src/world/stations.js';
+import {startAwakening,awakeningNode,powerFor,useMicroPower,powerCatalog,awakeningOptions} from '../src/story/awakening.js';
+test('25 confirmed starting locations are reachable; Paris, Beijing and New York are not new starts',()=>{
+ assert.equal(stationPool.length,25);assert.equal(new Set(stationPool.map(s=>s.id)).size,25);
+ for(let i=0;i<25;i++){assert.equal(pickStation(()=>i/25).id,stationPool[i].id);const s=startAwakening(selectBirthplace(fresh(),'seoul-mapo'),stationPool[i].id);assert.equal(s.residenceId,stationPool[i].id);assert.equal(s.birthplaceId,'seoul-mapo');assert.equal(s.currentNodeId,'awakening-0');assert.equal(awakeningNode(s).choices.length,5);assert.ok(!awakeningNode(s).text.includes('巴黎'));}
+ for(const id of ['paris','beijing','new-york'])assert.equal(getStation(id),null);
+});
+test('six coherent questions, five actions each, five powers, branch-aware scenes and save replay',()=>{
+ const seenPowers=new Set(),seenRoutes=new Set();
+ for(const station of stationPool)for(let route=0;route<5;route++)for(const axis of ['observe','care','adapt','resolve','coordinate']){
+  let s=startAwakening(selectBirthplace(fresh('awake-test'),'seoul-mapo'),station.id);
+  for(let q=0;q<6;q++){const node=awakeningNode(s);assert.equal(node.choices.length,5);assert.equal(s.awakening.powerId,null);assert.equal(useMicroPower(s),s);const choice=q===0?node.choices[route]:node.choices.find(c=>c.axis===axis);const before=JSON.stringify(s);const next=act(s,node.id,choice.id);assert.notEqual(next,s);assert.equal(JSON.stringify(s),before);assert.equal(act(next,node.id,choice.id),next);assert.ok(minuteValue(next.gameTime)>minuteValue(s.gameTime));s=next;seenRoutes.add(s.awakening.route);assert.deepEqual(replaySave(JSON.parse(JSON.stringify(s))),s);}
+  assert.equal(s.decisionHistory.length,6);assert.equal(s.currentNodeId,'awakening-result');const power=powerFor(s);assert.equal(power.axis,axis);seenPowers.add(power.id);
+  const used=useMicroPower(s);assert.equal(used.stats.energy,s.stats.energy-4);assert.equal(used.awakening.used,true);assert.equal(useMicroPower(used),used);assert.deepEqual(replaySave(JSON.parse(JSON.stringify(used))),used);
+ }
+ assert.equal(seenPowers.size,5);assert.deepEqual([...seenRoutes].sort(),['away','bus','library','stop']);
+});
+test('initial scene never reveals the sleeping librarian; hidden knowledge is not fabricated',()=>{
+ let bus=startAwakening(selectBirthplace(fresh(),'seoul-mapo'),'tokyo');assert.ok(!awakeningNode(bus).text.includes('識別證'));
+ bus=act(bus,'awakening-0','q0-1');assert.ok(!awakeningNode(bus).text.includes('識別證'));bus=act(bus,'awakening-1','q1-0');assert.ok(awakeningNode(bus).text.includes('識別證'));
+ const variants=new Set(['tokyo','seoul','shanghai','hong-kong','manila','alaska'].map(id=>awakeningNode(startAwakening(fresh(),id)).text));assert.equal(variants.size,6);
+});
+test('new setup restores independently, malformed city/history and premature power use are rejected',()=>{
+ const setup={...startAwakening(selectBirthplace(fresh('setup-check'),'taipei-daan'),'rio'),currentNodeId:'setup'};assert.deepEqual(replaySave(setup),setup);assert.equal(selectBirthplace(setup,'seoul-mapo').residenceId,'rio');
+ for(const change of [{scenarioId:'paris'},{birthplaceId:'fake'},{decisionHistory:[null]},{decisionHistory:[{nodeId:'awakening-2',choiceId:'q2-0'}]},{awakening:{used:true}},{currentNodeId:'awakening-result'}])assert.equal(replaySave({...setup,...change,currentNodeId:change.currentNodeId||'awakening-0'}),null);
+});
+test('ability ties use the most recent action among tied leading strategies',()=>{
+ let s=startAwakening(selectBirthplace(fresh(),'seoul-mapo'),'tokyo');
+ for(const axis of ['observe','care','adapt','care','observe','resolve']){const n=awakeningNode(s);s=act(s,n.id,n.choices.find(c=>c.axis===axis).id);}
+ assert.equal(powerFor(s).axis,'observe');assert.equal(s.awakening.scores.care,2);assert.equal(s.awakening.scores.observe,2);
+});
