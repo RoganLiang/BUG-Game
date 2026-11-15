@@ -1,0 +1,143 @@
+{
+  "version": "0.4.0",
+  "url": "https://roganliang.github.io/BUG-Game/",
+  "repository": "https://github.com/RoganLiang/BUG-Game",
+  "published_sha": "615424a7538f7f59cc94f98c38bbad06cc245f2b",
+  "ci_run": 43702005798,
+  "deploy_run": 43702196262,
+  "deployment_id": 7801800902,
+  "deployed_at": "2026-11-15T10:03:48Z",
+  "source_created": true,
+  "features_implemented": true,
+  "tests_passed": true,
+  "github_pushed": true,
+  "deployment_created": true,
+  "public_verified": true,
+  "physical_device_verified": false,
+  "remote_analytics_connected": false,
+  "reports": {
+    "awakening-report.json": {
+      "result": "PASS",
+      "tested_url": "https://roganliang.github.io/BUG-Game",
+      "recorded_at": "2026-11-15T10:04:45.556079+00:00",
+      "locations": [
+        "tokyo",
+        "seoul",
+        "shanghai",
+        "hong-kong",
+        "singapore",
+        "manila",
+        "ulaanbaatar",
+        "santiago",
+        "rio",
+        "boston",
+        "vancouver",
+        "alaska",
+        "montreal",
+        "canberra",
+        "wellington",
+        "jakarta",
+        "bangkok",
+        "penang",
+        "new-delhi",
+        "berlin",
+        "london",
+        "istanbul",
+        "cairo",
+        "madagascar",
+        "vatican"
+      ],
+      "checks": [
+        "all 25 starts reachable; none fixed Paris",
+        "six connected scenes; exactly five choices each",
+        "power hidden until six answers",
+        "power usable once with energy cost",
+        "mid-story reload preserves city and progress",
+        "birthplace draw does not overwrite scenario",
+        "six-language flow and save-safe switching",
+        "320–1440px layout",
+        "no premature librarian reveal",
+        "no JS errors"
+      ],
+      "native_review": false,
+      "physical_device_verified": false
+    },
+    "browser-report.json": {
+      "result": "PASS",
+      "browser": "156.0.8078.79",
+      "mode": "automated mobile Chromium emulation",
+      "tested_url": "https://roganliang.github.io/BUG-Game/BUG_Game.html",
+      "recorded_at": "2026-11-15T10:04:20.808347+00:00",
+      "checks": [
+        "homepage",
+        "demo draw and fixed route",
+        "distinct residence",
+        "0817/0829/0841 nodes",
+        "two distinct branches",
+        "gated choices",
+        "no premature city facts",
+        "message provenance",
+        "save reload",
+        "reset cancel/confirm",
+        "new game confirmation",
+        "320–1440px no overflow across all tabs",
+        "44px map targets",
+        "keyboard Enter",
+        "CRT toggle",
+        "reduced motion",
+        "corrupt save",
+        "blocked storage",
+        "CSSOM parsed",
+        "no console/page errors"
+      ],
+      "external_device_verified": false
+    },
+    "locales-report.json": {
+      "result": "PASS",
+      "languages": [
+        "zh-Hant",
+        "en",
+        "ja",
+        "ko",
+        "es",
+        "fr"
+      ],
+      "tested_base_url": "https://roganliang.github.io/BUG-Game",
+      "recorded_at": "2026-11-15T10:04:51.789281+00:00",
+      "checks": [
+        "main action in first viewport",
+        "fictional clip A/B and timeline",
+        "play/pause",
+        "single-click start",
+        "same story effects across languages",
+        "language switch preserves save",
+        "language survives reload",
+        "six-language story/records/world",
+        "320–1440px no overflow",
+        "no Chinese fallback in en/es/fr",
+        "reset preserves language and resets clip",
+        "no console/page errors"
+      ],
+      "native_speaker_review": false,
+      "physical_device_verified": false
+    },
+    "https-report.json": {
+      "result": "PASS",
+      "recorded_at": "2026-11-15T10:04:03.227229+00:00",
+      "published_sha": "615424a7538f7f59cc94f98c38bbad06cc245f2b",
+      "sha256": "252a40328b5a4a84ef20818263a55f71cc2fae3c5ab5b3240deceb34b7b65a77",
+      "checks": [
+        {
+          "url": "https://roganliang.github.io/BUG-Game/",
+          "status": 200,
+          "matches_local_build": true
+        },
+        {
+          "url": "https://roganliang.github.io/BUG-Game/BUG_Game.html",
+          "status": 200,
+          "matches_local_build": true
+        }
+      ]
+    }
+  }
+}

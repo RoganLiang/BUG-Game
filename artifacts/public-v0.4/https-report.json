@@ -1,0 +1,18 @@
+{
+  "result": "PASS",
+  "recorded_at": "2026-11-15T10:04:03.227229+00:00",
+  "published_sha": "615424a7538f7f59cc94f98c38bbad06cc245f2b",
+  "sha256": "252a40328b5a4a84ef20818263a55f71cc2fae3c5ab5b3240deceb34b7b65a77",
+  "checks": [
+    {
+      "url": "https://roganliang.github.io/BUG-Game/",
+      "status": 200,
+      "matches_local_build": true
+    },
+    {
+      "url": "https://roganliang.github.io/BUG-Game/BUG_Game.html",
+      "status": 200,
+      "matches_local_build": true
+    }
+  ]
+}
