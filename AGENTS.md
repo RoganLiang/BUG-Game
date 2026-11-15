@@ -37,3 +37,6 @@ npm run test:browser
 
 ## 後續
 202單位資料、更多章節、持續世界／多人屬後續里程碑，不阻塞現有MVP。未做實體手機測試不可稱外部裝置已驗證。每次回報用RESULT、CHANGED FILES、TESTS、GIT、PREVIEW/DEPLOY、BLOCKERS、NEXT，附實際證據。
+
+## 0.4.0 現行新章（優先於以上舊章描述）
+新遊戲25處抽選與六題覺醒見docs/AWAKENING.md，不能固定巴黎。舊章0.2.0存檔繼續保留。新章scenarioId/awakening存檔版本0.4.0，仍使用同一儲存鍵；不能為更新文案刪除進度。新增文字須同步六語awakening-catalog。測試另跑npm run test:locales與npm run test:awakening。Supabase免費專案已建立但遊戲沒有接入後端；不得宣稱統計已啟用。

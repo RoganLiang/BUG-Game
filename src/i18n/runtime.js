@@ -21,5 +21,5 @@ export function localizeDOM(root=document.body){
   for(const [attribute,value]of Object.entries(sourceAttributes.get(element)))element.setAttribute(attribute,translateText(value));
  }
  document.documentElement.lang=activeLanguage;
- document.title=translateText('皇蛾效應 BUG｜巴黎的17秒');
+ document.title=translateText('皇蛾效應 BUG｜六題覺醒');
 }

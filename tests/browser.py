@@ -23,7 +23,12 @@ with sync_playwright() as p:
     assert page.locator('style').evaluate('(s)=>s.sheet.cssRules.length')>100
     assert page.locator('#continue').is_hidden()
     page.screenshot(path=str(artifacts/'mobile-start.png'),full_page=True)
-    page.locator('#setup-start').click()
+    def legacy_story():
+        page.evaluate("s=>localStorage.setItem('moth-effect-bug-v2',JSON.stringify(s))",{'gameVersion':'0.2.0','runId':'legacy-browser-check','currentNodeId':'setup','birthplaceId':'seoul-mapo','residenceId':'paris-11','decisionHistory':[]})
+        page.reload()
+        page.locator('#continue').click()
+
+    legacy_story()
     page.get_by_role('button',name='固定示範：首爾麻浦區').click()
     assert '韓國・首爾麻浦區' in page.locator('#character').text_content()
     assert '法國・巴黎第11區' in page.locator('#character').text_content()
@@ -81,7 +86,8 @@ with sync_playwright() as p:
     assert page.locator('#continue').is_hidden()
     page.reload()
     assert page.locator('#continue').is_hidden()
-    page.locator('#start').click()
+    legacy_story()
+    page.get_by_role('button',name='進入巴黎 · 2026-11-01').click()
     page.locator('[data-choice="share-video"]').click()
     page.locator('[data-choice="wait-window"]').click()
     assert page.locator('[data-choice="compare-window"]').is_disabled()
@@ -110,7 +116,7 @@ with sync_playwright() as p:
     q.goto(url)
     q.locator('#start').click()
     assert '無法存檔' in q.locator('#save-status').inner_text()
-    assert q.locator('[data-choice]').count()==3
+    assert q.locator('[data-choice]').count()==5
     assert not errors,errors
     report={'result':'PASS','browser':browser.version,'mode':'automated mobile Chromium emulation','tested_url':url,'recorded_at':datetime.now(timezone.utc).isoformat(),'checks':['homepage','demo draw and fixed route','distinct residence','0817/0829/0841 nodes','two distinct branches','gated choices','no premature city facts','message provenance','save reload','reset cancel/confirm','new game confirmation','320–1440px no overflow across all tabs','44px map targets','keyboard Enter','CRT toggle','reduced motion','corrupt save','blocked storage','CSSOM parsed','no console/page errors'],'external_device_verified':False}
     (artifacts/'browser-report.json').write_text(json.dumps(report,ensure_ascii=False,indent=2))
