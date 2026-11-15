@@ -28,7 +28,7 @@ function render(focus=false){
  $('#character').innerHTML=characterMarkup(playerView(state));$('#scene-place').textContent=getStation(state.scenarioId)?.names[0]||'PARIS 11';$('#scene-time').textContent=state.gameTime;
  for(const name of ['story','records','world']){$('#'+name).hidden=tab!==name;$('#'+name+'-tab').setAttribute('aria-current',tab===name?'page':'false');}
  $('#story').innerHTML=storyMarkup(playerView(state),selectedLand);$('#records').innerHTML=recordsMarkup(playerView(state));$('#world').innerHTML=worldMarkup(playerView(state),selected,selectedLand);
- if(state.scenarioId){if(state.land)paintLand(state);else paintArrival(state);$('#clip-caption').textContent=getStation(state.scenarioId).names[0];$('#clip-clock').textContent=state.gameTime;}else if(screen==='home'){$('#clip-caption').textContent='WORLD / ARRIVAL';$('#clip-clock').textContent='06 CHOICES';}
+ if(state.scenarioId){if(state.land)paintLand(playerView(state));else paintArrival(playerView(state));$('#clip-caption').textContent=getStation(state.scenarioId).names[0];$('#clip-clock').textContent=state.gameTime;}else if(screen==='home'){$('#clip-caption').textContent='WORLD / ARRIVAL';$('#clip-clock').textContent='06 CHOICES';}
  translate();
  if(focus){const heading=$(screen==='home'?'#home h2':'#'+tab+' h2');heading?.focus({preventScroll:true});heading?.scrollIntoView({block:'nearest',behavior:'instant'});}
 }
