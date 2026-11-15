@@ -1,0 +1,30 @@
+{
+  "result": "PASS",
+  "tested_url": "http://127.0.0.1:4173",
+  "recorded_at": "2026-11-15T15:09:11.637030+00:00",
+  "languages": [
+    "zh-Hant",
+    "en",
+    "ja",
+    "ko",
+    "es",
+    "fr"
+  ],
+  "checks": [
+    "awakening-to-land continuation with previously used ability",
+    "36 initially unbuilt tiles",
+    "geographical building constraints",
+    "resource costs and production",
+    "ability cost and cooldown",
+    "weather and fixed knocking mystery",
+    "stable settlement at turn 9",
+    "mid-game and end save reload",
+    "keyboard arrow navigation",
+    "44px tiles and 320–1440px no overflow",
+    "six languages and no CJK fallback in en/es/fr",
+    "reset clears land",
+    "no page errors"
+  ],
+  "physical_device_verified": false,
+  "native_review": false
+}

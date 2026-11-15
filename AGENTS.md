@@ -40,3 +40,7 @@ npm run test:browser
 
 ## 0.4.0 現行新章（優先於以上舊章描述）
 新遊戲25處抽選與六題覺醒見docs/AWAKENING.md，不能固定巴黎。舊章0.2.0存檔繼續保留。新章scenarioId/awakening存檔版本0.4.0，仍使用同一儲存鍵；不能為更新文案刪除進度。新增文字須同步六語awakening-catalog。測試另跑npm run test:locales與npm run test:awakening。Supabase免費專案已建立但遊戲沒有接入後端；不得宣稱統計已啟用。
+
+## 0.5.0 覺醒後重建
+
+docs/LAND.md是現行重建範圍與資料邊界。新land狀態保留0.4存檔格式，從歷史重播，不能信任持久化資源。土地起步零建築，未知地塊在playerView遮蔽；地理是demo，不冒稱實測地圖。出生地與故事落點繼續分欄。新增npm run test:land；勿刪舊章回歸。作者《電梯》草稿保留本機／stash，未核定機制不擅自發布。
