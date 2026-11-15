@@ -1,4 +1,30 @@
-# 最新交付：0.3.0（2026-11-11，Asia/Taipei）
+# 最新交付：0.4.0（2026-11-15，Asia/Taipei）
+
+**試玩：https://roganliang.github.io/BUG-Game/**
+
+新旅程請確認右上角 DEMO 0.4.0，點「抽選地點・開始六題故事」。舊巴黎存檔不會自動搬走；可保留繼續，或確認開始新旅程。
+
+原始碼與功能已建立：25個等權起點、六題每題五選項、依策略授予五種 Level 0.1 能力之一、可試用一次且精力扣4、訊息與可見訊號、本機存檔、六語。25處共用公車主線與六種開場，不是25套完整長篇。
+
+| 狀態 | 結論／證據 |
+|---|---|
+| 原始碼／功能／GitHub | 已推送並合併 [PR #6](https://github.com/RoganLiang/BUG-Game/pull/6) |
+| 本機測試 | build、check、14組邏輯、625組合流程、舊章瀏覽器、六語與25起點測試通過 |
+| 同一發布SHA CI | [43702005798](https://github.com/RoganLiang/BUG-Game/actions/runs/43702005798) success |
+| 部署建立 | [43702196262](https://github.com/RoganLiang/BUG-Game/actions/runs/43702196262) success；Deployment 7801800902 |
+| 公開上線 | 首頁與BUG_Game.html皆HTTP 200，逐位元組與本機建置一致；https-report.json |
+| 公開新章測試 | artifacts/public-v0.4/awakening-report.json：25起點、六題、能力使用與存檔、六語、320–1440px與無JS錯誤均PASS |
+| 外部實體手機 | 未驗證；目前為Chromium手機模擬 |
+| 原文翻譯／趣味性 | 六語初稿，未做母語校閱或真人趣味性研究 |
+| 遠端統計 | Supabase免費專案已建立但未接入遊戲，沒有在線人數或遠端選項採集 |
+
+發布SHA：`615424a7538f7f59cc94f98c38bbad06cc245f2b`。GitHub Pages成功時間：2026-11-15 **18:03:48**（臺北；原始10:03:48Z）。正式網址由Pages／deployment API回傳。成品SHA-256：`252a40328b5a4a84ef20818263a55f71cc2fae3c5ab5b3240deceb34b7b65a77`。
+
+公開HTTP驗證18:04:03、新章測試18:04:45（臺北）。舊巴黎回歸測試也已從公開網址通過；六語舊章回歸結果見public-v0.4/locales-report.json。後續文件提交不會自動重新發布；公開成品對應上述SHA。
+
+---
+
+# 歷史交付：0.3.0（2026-11-11，Asia/Taipei）
 
 **試玩：https://roganliang.github.io/BUG-Game/**
 
