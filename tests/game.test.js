@@ -74,3 +74,41 @@ test('ability ties use the most recent action among tied leading strategies',()=
  for(const axis of ['observe','care','adapt','care','observe','resolve']){const n=awakeningNode(s);s=act(s,n.id,n.choices.find(c=>c.axis===axis).id);}
  assert.equal(powerFor(s).axis,'observe');assert.equal(s.awakening.scores.care,2);assert.equal(s.awakening.scores.observe,2);
 });
+
+import {makeLandMap,landProfile,landNeighbors} from '../src/world/terrain.js';
+import {startLand,landAct,canLandAction,landInformation} from '../src/game/land.js';
+import {landMarkup} from '../src/ui/land-render.js';
+function landStart(id='tokyo',axis='observe',practice=false){let s=startAwakening(selectBirthplace(fresh('land-test'),'seoul-mapo'),id);for(let q=0;q<6;q++){const n=awakeningNode(s);s=act(s,n.id,n.choices.find(c=>c.axis===axis).id);}if(practice)s=useMicroPower(s);return startLand(s);}
+function landStep(s,a,i=null){const before=JSON.stringify(s),n=landAct(s,a,i);assert.notEqual(n,s,`${a} blocked at ${s.land.turn}`);assert.equal(JSON.stringify(s),before);assert.deepEqual(replaySave(JSON.parse(JSON.stringify(n))),n);assert.ok(minuteValue(n.gameTime)>=minuteValue(s.gameTime));return n;}
+test('land: all 25 regions and five abilities reach a stable settlement, including old practiced saves',()=>{
+ const maps=new Set();for(const st of stationPool)for(const axis of powerCatalog.map(p=>p.axis)){
+  let s=landStart(st.id,axis,true);maps.add(JSON.stringify(s.land.map));assert.equal(s.birthplaceId,'seoul-mapo');assert.equal(s.residenceId,st.id);assert.ok(s.land.map.every(t=>t.building===null));
+  for(const [a,i]of [['camp',7],['well',14],['farm',8],['power',null],['event-risk',null],['rest',null],['rest',null],['rest',null],['rest',null],['event-prepare',null],['rest',null]])s=landStep(s,a,i);
+  assert.equal(s.land.status,'settled');assert.equal(s.land.turn,9);assert.ok(s.land.resources.food>=4&&s.land.resources.water>=4);assert.ok(landInformation(s).some(i=>i.content.includes('竹扣')));
+ }assert.ok(maps.size>=20);assert.notEqual(landProfile('cairo').farmYield,landProfile('singapore').farmYield);
+});
+test('land: geographical build rules, finite resources, fog isolation, costs and stale guards',()=>{
+ let s=landStart();
+ const invalid=fresh();assert.equal(startLand(invalid),invalid);
+ assert.equal(canLandAction(s,'well',8),false);assert.equal(canLandAction(s,'well',14),true);assert.equal(canLandAction(s,'farm',8),false);assert.equal(canLandAction(s,'camp',15),false);
+ const fog=playerView(s).land.map.filter(t=>!s.land.visible.includes(t.index));assert.ok(fog.every(t=>t.kind==='fog'&&t.stock===null));assert.equal(landAct(s,'gather',0),s);
+ const previous=s;s=landStep(s,'camp',7);assert.equal(s.land.resources.wood,previous.land.resources.wood-6);assert.equal(canLandAction(s,'camp',8),false);assert.equal(landAct(s,'camp',7,0),s);
+ s=landStep(s,'gather',13);s=landStep(s,'gather',13);s=landStep(s,'gather',13);assert.ok(s.land.event);assert.equal(landAct(s,'rest'),s);s=landStep(s,'event-risk');assert.equal(canLandAction(s,'gather',13),false);
+ const before=s.stats.energy;s=landStep(s,'power');assert.equal(s.stats.energy,before-4);assert.equal(canLandAction(s,'power'),false);assert.equal(landAct(s,'power'),s);
+ assert.deepEqual(replaySave({...s,land:{resources:{wood:99999},visible:Array.from({length:36},(_,i)=>i)}}),s);
+ for(const bad of [{...s,currentNodeId:'land-bad'},{...s,decisionHistory:[...s.decisionHistory,{nodeId:'land',choiceId:'gather',index:999,expectedTurn:s.land.turn}]}])assert.equal(replaySave(bad),null);
+});
+test('land: river siting changes flood losses; mysteries reveal only after choosing investigation',()=>{
+ let vulnerable=landStart();for(const [a,i]of [['well',9],['farm',14],['rest',null],['rest',null]])vulnerable=landStep(vulnerable,a,i);
+ const r=vulnerable.land.resources.food;const flooded=landAct(vulnerable,'event-risk');assert.equal(flooded.land.resources.food,r-4);
+ let safe=landStart();for(let i=0;i<4;i++)safe=landStep(safe,'rest');const food=safe.land.resources.food;safe=landStep(safe,'event-risk');assert.equal(safe.land.resources.food,food);
+ while(safe.land.turn<8)safe=landStep(safe,'rest');assert.ok(!landMarkup(playerView(safe)).includes('鬆脫的竹扣'));const investigated=landStep(safe,'event-prepare'),sealed=landStep(safe,'event-risk');assert.notEqual(investigated.land.log.at(-1).text,sealed.land.log.at(-1).text);
+ for(const code of ['en','es','fr'])for(const state of [landStart(),safe,investigated,sealed])for(const line of landMarkup(playerView(state)).replace(/<[^>]*>/g,'\n').split('\n'))assert.ok(!/[\u3400-\u9fff]/.test(translateText(line,code)),code+': '+line);
+});
+test('land: all environment responses, the later traveler, and the 18-turn incomplete outcome replay safely',()=>{
+ for(const id of ['tokyo','cairo','ulaanbaatar'])for(const response of ['event-prepare','event-risk']){
+  let s=landStart(id);while(s.land.turn<18){if(s.land.event)s=landStep(s,response);else s=landStep(s,'rest');}
+  assert.equal(s.land.status,'unfinished');assert.equal(s.land.event,null);assert.equal(s.land.log.filter(x=>x.event==='visitor').length,1);assert.equal(landAct(s,'rest'),s);
+  for(const code of ['en','es','fr'])for(const line of landMarkup(playerView(s)).replace(/<[^>]*>/g,'\n').split('\n'))assert.ok(!/[\u3400-\u9fff]/.test(translateText(line,code)),code+': '+line);
+ }
+});

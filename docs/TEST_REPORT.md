@@ -1,3 +1,15 @@
+# 0.5.0 本機測試 — 2026-11-15
+
+實際通過：npm run build、npm run check、npm test（18組）、npm run test:browser、npm run test:locales、npm run test:awakening、npm run test:land。
+
+新增25落點×5能力的125條成功重建流程，包含已試用能力的舊檔；地理建造限制、有限資源、成本、迷霧投影、存檔重播／竄改防護、時間、暴雨地勢差異、三種環境事件的兩種回應、旅人與18輪未完成結果。原有625組六題流程與巴黎32條路徑仍通過。
+
+新沙盤瀏覽器測試通過六語、44px地塊、方向鍵、320–1440px無水平溢出、資源成本、能力冷卻、事件、輪中與結尾重載、重設及無page errors。實際JSON與截圖：artifacts/v05-local/。已目視檢視手機建造地圖。
+
+未驗證：實體手機、母語校閱、真人趣味性／平衡性、多人負載。沒有遠端統計。
+
+---
+
 # 0.4.0 本機測試 — 2026-11-15
 
 實際通過：npm run build、npm run check、npm test（14組）、npm run test:browser、npm run test:locales、npm run test:awakening。

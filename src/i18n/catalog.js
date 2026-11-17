@@ -1,3 +1,4 @@
+import {landCatalog} from './land-catalog.js';
 import {awakeningCatalog} from './awakening-catalog.js';
 export const catalog=[
   [
@@ -1932,3 +1933,5 @@ export const catalog=[
 
 const knownCatalogSources=new Set(catalog.map(r=>r[0]));
 for(const row of awakeningCatalog)if(!knownCatalogSources.has(row[0])){catalog.push(row);knownCatalogSources.add(row[0]);}
+
+for(const row of landCatalog)if(!knownCatalogSources.has(row[0])){catalog.push(row);knownCatalogSources.add(row[0]);}
