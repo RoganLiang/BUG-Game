@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#11100f"><title>皇蛾效應 BUG｜逆時試驗</title><link rel="icon" href="data:,"><link rel="stylesheet" href="./css/glitch.css"></head>
+<body>
+<main class="terminal">
+<header><div><small>THE ATLAS MOTH EFFECT</small><h1>皇蛾效應 <span>BUG</span></h1></div><button id="audio-toggle" aria-pressed="false" aria-label="開啟聲音">靜音</button></header>
+<p class="mode-label">逆時試驗 0.6.0-alpha · 單人／五節點模擬 · 美術待定</p>
+<section id="onboarding">
+ <p class="eyebrow">CALIBRATION / 01</p><h2 tabindex="-1">皇蛾潛意識頻率測試</h2>
+ <p>你還記得，今天最熟悉的那件小事嗎？</p>
+ <p class="notice">互動敘事設定，不是心理測驗。可以使用虛構答案或全部留白；輸入只保存在這個瀏覽器，不會傳到伺服器。</p>
+ <form id="survey">
+  <label for="daily">今天，你想暫時離開哪一種日常聲音或環境？</label><input id="daily" name="job" maxlength="80" autocomplete="off">
+  <label for="habit">哪件小事，你不太需要想就能順手做好？</label><input id="habit" name="skill" maxlength="80" autocomplete="off">
+  <label for="avoid">哪個小小的不順心，會讓你整天在意？</label><input id="avoid" name="avoid" maxlength="80" autocomplete="off">
+  <button class="primary" type="submit">讓指針退一格</button>
+ </form>
+ <button id="continue" hidden>繼續這輪</button><p id="storage-note" role="status"></p>
+ <details><summary>開始之前</summary><p>所有人物、地點遭遇與危機皆為虛構。這輪約五分鐘；離開或重載網頁後，倒數仍會按經過時間結算。五個節點由程式模擬，不是其他在線玩家。重玩不收費。</p><p>若畫面或音效讓你不舒服，可以關閉效果或離開。正文與選項保持清晰，沒有必須模仿的現實危險操作。</p></details>
+</section>
+<section id="session" hidden>
+ <div class="status-frame"><p id="day-label"></p><div class="time-row"><time id="clock">14:16</time><span id="remaining"></span></div><p id="warning" aria-live="polite"></p></div>
+ <div class="host-card"><span id="city"></span><h2 id="host" tabindex="-1"></h2><p id="constraint"></p><div class="meter"><label for="sync">擬態同步</label><meter id="sync" min="0" max="100" value="100"></meter><span id="sync-number"></span></div><p id="body-cue"></p></div>
+ <section class="story-frame"><p id="story"></p><div id="choices"></div></section>
+ <div class="paths"><button id="approach">走近前方轉角</button><button id="retreat">退回身後走廊</button><button id="ground">把手放穩，等呼吸跟上</button></div>
+ <details id="relay"><summary>紙頁與雜訊</summary><p class="notice">模擬節點；沒有真人聊天室。</p><p>交換鏈 25942 ah · 本機模擬</p><div id="chain" aria-label="五個模擬節點"></div><form id="mark-form"><label for="mark">留在第42頁的字（最多10字）</label><input id="mark" maxlength="20" autocomplete="off"><button id="mark-send" type="submit">把紙頁摺回去</button></form><div class="paths"><button id="pulse-two">敲出兩下</button><button id="pulse-three">敲出三下</button></div><p id="relay-status" role="status"></p></details>
+ <section class="radio"><h3>收音機</h3><ul id="feed"></ul></section>
+ <details><summary>隨身筆記</summary><p id="memory"></p><ol id="log"></ol></details>
+ <button id="leave">暫離這輪</button>
+</section>
+<section id="ending" hidden><p class="eyebrow">RESIDUE</p><h2 id="ending-text" tabindex="-1"></h2><p>螢幕暗下來。你還記得手指最後碰到的那個角落。</p><button class="primary" id="replay">再聽一次夜裡的聲音</button><button id="ending-home">回到起點</button></section>
+<footer><label><input type="checkbox" id="effects"> CRT 與邊緣效果</label><button id="erase">清除本機紀錄</button><p>單人虛構原型 · 聲音預設關閉 · 無付費服務</p></footer>
+<div class="sr-only" id="announcement" role="status" aria-live="polite"></div>
+</main>
+<dialog id="confirm-reset"><h2>清除本機紀錄？</h2><p>這會清除本版旅程與跨輪殘留；不會動到公車或重建沙盤的存檔。</p><button id="cancel-erase">保留</button><button id="confirm-erase">確認清除</button></dialog>
+<dialog id="confirm-new"><h2>開始另一輪？</h2><p>目前這輪會被取代。你也可以先繼續。</p><button id="cancel-new">繼續目前這輪</button><button id="accept-new">開始另一輪</button></dialog>
+<script type="module" src="./js/app.js"></script>
+</body></html>
