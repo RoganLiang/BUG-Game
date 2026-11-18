@@ -1,0 +1,25 @@
+{
+  "local_build": "PASS",
+  "syntax_schema_public_copy": "PASS",
+  "root_logic_groups": 27,
+  "reverse_logic_groups": 9,
+  "all_scenario_win_routes": 400,
+  "seed_branch_graphs": 20,
+  "legacy_browser_suites": [
+    "browser",
+    "locales",
+    "awakening",
+    "land"
+  ],
+  "reverse_browser_suites": [
+    "modules",
+    "standalone HTTP",
+    "combined site path"
+  ],
+  "single_file_without_subresources": "PASS",
+  "file_url_verified": false,
+  "physical_device_verified": false,
+  "claude_reviewed": false,
+  "real_multiplayer": false,
+  "new_artwork_created": false
+}

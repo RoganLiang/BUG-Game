@@ -1,0 +1,23 @@
+{
+  "result": "PASS",
+  "tested_url": "http://127.0.0.1:4180",
+  "recorded_at": "2026-11-18T06:47:27.693720+00:00",
+  "checks": [
+    "three-question start and deterministic fallback",
+    "five-day reverse clock and stable shuffled choices",
+    "five simulated chain nodes",
+    "10-character indirect marks",
+    "two proximity warning levels and contact death",
+    "survival and replay residue without double counting",
+    "mid-run and ending reload",
+    "320–1440px no overflow and 48px choices",
+    "reduced-motion context",
+    "safe text rendering",
+    "corrupt and blocked storage",
+    "no external asset requests or page errors"
+  ],
+  "physical_device_verified": false,
+  "native_review": false,
+  "claude_reviewed": false,
+  "real_multiplayer": false
+}

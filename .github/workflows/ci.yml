@@ -36,8 +36,11 @@ jobs:
           npm run test:locales
           npm run test:awakening
           npm run test:land
+          ATLAS_BASE_URL=http://127.0.0.1:4173/atlas-moth-bug ATLAS_ARTIFACT_DIR=atlas-moth-bug/artifacts/ci npm run test:atlas
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: browser-evidence
-          path: artifacts/
+          path: |
+            artifacts/
+            atlas-moth-bug/artifacts/
