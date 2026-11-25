@@ -1,0 +1,5 @@
+{
+  "single_file_http_without_subresources": "PASS",
+  "file_url_verified": false,
+  "file_url_limitation": "Page.goto: net::ERR_BLOCKED_BY_ADMINISTRATOR at file:///workspace/atlas-moth-bug-dev/atlas-moth-bug/dist/index.html"
+}

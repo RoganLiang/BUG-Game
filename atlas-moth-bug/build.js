@@ -1,0 +1,11 @@
+import {mkdir,readFile,writeFile,cp} from 'node:fs/promises';
+import {SCENARIO_DB,loadScenarioBatch} from './data/scenarios.js';
+const root=new URL('./',import.meta.url),out=new URL('./dist/',root);
+loadScenarioBatch(SCENARIO_DB);await mkdir(out,{recursive:true});
+const files=['data/scenarios.js','js/engine.js','js/audio.js','js/app.js'];
+const code=(await Promise.all(files.map(f=>readFile(new URL(f,root),'utf8')))).map(text=>text.replace(/^import .*;\n/gm,'').replace(/^export /gm,'')).join('\n');
+let html=await readFile(new URL('index.html',root),'utf8');const css=await readFile(new URL('css/glitch.css',root),'utf8');
+html=html.replace('<link rel="stylesheet" href="./css/glitch.css">',()=>`<style>${css}</style>`).replace('<script type="module" src="./js/app.js"></script>',()=>`<script type="module">${code}</script>`);
+await writeFile(new URL('index.html',out),html);await writeFile(new URL('data/scenarios_200.json',root),JSON.stringify(SCENARIO_DB,null,2));await writeFile(new URL('scenarios_200.json',out),JSON.stringify(SCENARIO_DB,null,2));
+for(const name of ['js','css','data'])await cp(new URL(name,root),new URL(name,out),{recursive:true});
+console.log(`Built standalone index.html; ${SCENARIO_DB.pairs} pairs / ${SCENARIO_DB.scenarios.length} directions`);

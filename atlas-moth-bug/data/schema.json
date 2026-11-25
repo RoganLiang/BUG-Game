@@ -1,0 +1,22 @@
+{
+ "$schema":"https://json-schema.org/draft/2020-12/schema",
+ "title":"Atlas scenario batch v1",
+ "type":"array",
+ "minItems":1,
+ "items":{
+  "type":"object",
+  "required":["id","real_job","real_skill","host_profile","host_debuff","reverse_crisis","choices","breakout_index"],
+  "properties":{
+   "id":{"type":"string","minLength":1},
+   "real_job":{"type":"string","minLength":1},
+   "real_skill":{"type":"string","minLength":1},
+   "host_profile":{"type":"object","required":["name","city","place"],"properties":{"name":{"type":"string"},"city":{"type":"string"},"place":{"type":"string"}}},
+   "host_debuff":{"type":"string"},
+   "reverse_crisis":{"type":"string","minLength":1},
+   "choices":{"type":"array","minItems":3,"maxItems":3,"items":{"type":"string","minLength":1}},
+   "breakout_index":{"type":"integer","minimum":0,"maximum":2},
+   "origin":{"enum":["seed","procedural","fallback","imported"]},
+   "nodes":{"type":"array","minItems":5,"maxItems":5,"items":{"type":"object","required":["id","day","text","choices"]}}
+  }
+ }
+}
